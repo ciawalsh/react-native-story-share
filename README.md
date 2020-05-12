@@ -1,13 +1,13 @@
 # react-native-story-share
 
-Share your images to instagram and snapchat stories.
+Share your images to instagram stories.
 
-| OS | Type | Supported |
-|---|---|:---:|
-| iOS | BASE64 | YES |
-|  | FILE | YES |
-| Android | BASE64 | YES |
-|  | FILE | NO |
+| OS      | Type   | Supported |
+| ------- | ------ | :-------: |
+| iOS     | BASE64 |    YES    |
+|         | FILE   |    YES    |
+| Android | BASE64 |    YES    |
+|         | FILE   |    NO     |
 
 ## Getting started
 
@@ -53,24 +53,6 @@ or
 
 ## Integration
 
-### Android
-
- + add snap client id
-```diff
-<application ...>
-   ...
-
-+   <meta-data android:name="com.snapchat.kit.sdk.clientId" android:value="your app’s client id" />
-
-   ...
-</application>
-```
-
-+ add snap sdk
-```
-maven { url "https://storage.googleapis.com/snap-kit-build/maven" }
-```
-
 ### iOS
 
 #### Swift
@@ -85,7 +67,7 @@ $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)
 
 #### Info.plist
 
-+ add `instagram-stories` and `snapchat` to the `LSApplicationQueriesSchemes` key in your app's Info.plist.
++ add `instagram-stories` to the `LSApplicationQueriesSchemes` key in your app's Info.plist.
 
 ```diff
 ...
@@ -97,11 +79,6 @@ $(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)
 </array>
 ...
 ```
-
-#### snapchat
-+ add `SCSDKClientId` to your `Info.plist`
-+ add `pod 'SnapSDK', :subspecs => ['SCSDKCreativeKit']` to your Podfile with `use_frameworks!`
-+ *optional* add [build script](https://docs.snapchat.com/docs/submitting) to reduce bundle size
 
 ## Usage
 
@@ -126,46 +103,19 @@ RNStoryShare.isInstagramAvailable()
   .catch(e => console.log(e));
 ```
 
-### Share To Snapchat
-```javascript
-import RNStoryShare from "react-native-story-share";
-
-RNStoryShare.isSnapchatAvailable()
-  .then(isAvailable => {
-
-    if(isAvailable){
-      RNStoryShare.shareToSnapchat({
-        type: RNStoryShare.BASE64, // or RNStoryShare.FILE
-        attributionLink: 'https://myproject.com',
-        backgroundAsset: 'data:image/png;base64,iVBO...',
-        stickerAsset: 'data:image/png;base64,iVBO...',
-        stickerOptions: {
-          height: 900,
-          width: 900
-        }
-      });
-    }
-  })
-  .catch(e => console.log(e));
-
-```
-
 ## API
 
 ### Constants
 
-| Name | Value |
-|---|---|
+| Name   | Value    |
+| ------ | -------- |
 | BASE64 | "base64" |
-| FILE | "file" |
+| FILE   | "file"   |
 
 ### Methods
 
 #### `isInstagramAvailable(): Promise<boolean>`
 Return a boolean indicating if Instagram is available on the phone.
-
-#### `isSnapchatAvailable(): Promise<boolean>`
-Return a boolean indicating if Snapchat is available on the phone.
 
 #### `shareToInstagram(config: ShareConfigObject): Promise<void>`
 ```
@@ -181,19 +131,6 @@ type ShareConfigObject = {
 }
 ```
 Shares a file or base64 image as background, sticker or both to Instagram. The background colors are only applyed when no background asset is set.
-
-#### `shareToSnapchat(config: ShareConfigObject): Promise<void>`
-```
-type ShareConfigObject = {
-  type: "base64" || "file",
-	attributionLink: string,
-	backgroundAsset: string,
-	stickerAsset: string,
-	backgroundBottomColor: string,
-	backgroundTopColor: string
-}
-```
-Shares a file or base64 image as background, sticker or both to Snapchat. `stickerOptions` are only supported by Android.
 
 ## Roadmap
 - Android file path support
